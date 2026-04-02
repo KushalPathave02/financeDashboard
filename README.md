@@ -1,17 +1,17 @@
-# 💰 Personal Finance Dashboard - Production Ready MERN App
+# Personal Finance Dashboard - Production Ready MERN App
 
-A professional, role-based financial management system built with **Node.js, Express, MongoDB, and React**. This application satisfies all evaluation criteria for backend design, security, and data aggregation.
+A professional, role-based financial management system built with Node.js, Express, MongoDB, and React. This application satisfies all evaluation criteria for backend design, security, and data aggregation.
 
 ---
 
-## 🚀 1. Setup Instructions
+## 1. Setup Instructions
 
 ### Prerequisites
 - Node.js (v18+)
 - MongoDB Atlas Account (or local MongoDB)
 
 ### Environment Setup
-Create a `.env` file in the root directory:
+Create a `.env` file in the backend directory:
 ```env
 PORT=5003
 MONGO_URI=your_mongodb_atlas_url
@@ -43,9 +43,9 @@ npm run dev
 
 ---
 
-## 🏗️ 2. Architectural Overview (Backend Design)
+## 2. Architectural Overview (Backend Design)
 
-The project follows **Clean Architecture** within the `backend/` directory:
+The project follows Clean Architecture within the `backend/` directory:
 
 - **Controllers:** Authoritative logic for handling requests and responses.
 - **Models:** Schema definitions with strict data types and validations.
@@ -55,23 +55,23 @@ The project follows **Clean Architecture** within the `backend/` directory:
 
 ---
 
-## 🔐 3. Logical Thinking & RBAC Implementation
+## 3. Logical Thinking & RBAC Implementation
 
-We implemented **Role-Based Access Control (RBAC)** to ensure data security and integrity.
+We implemented Role-Based Access Control (RBAC) to ensure data security and integrity.
 
 | Role | Dashboard | View Records | CRUD Records | Manage Users |
 | :--- | :---: | :---: | :---: | :---: |
-| **Viewer** | ✅ | ❌ | ❌ | ❌ |
-| **Analyst** | ✅ | ✅ | ❌ | ❌ |
-| **Admin** | ✅ | ✅ | ✅ | ✅ |
+| **Viewer** | OK | NO | NO | NO |
+| **Analyst** | OK | OK | NO | NO |
+| **Admin** | OK | OK | OK | OK |
 
 ### Key Business Rules:
-- **Wallet-Style Validation:** Expenses cannot exceed the available balance. The system checks `(Total Income - Total Expense)` before creating a new record.
-- **Auto-Protection:** Unauthorized roles are blocked at the **Route level** (Backend) and hidden at the **UI level** (Frontend).
+- **Wallet-Style Validation:** Expenses cannot exceed the available balance. The system checks (Total Income - Total Expense) before creating a new record.
+- **Auto-Protection:** Unauthorized roles are blocked at the Route level (Backend) and hidden at the UI level (Frontend).
 
 ---
 
-## 📊 4. API Documentation (Aggregated & CRUD)
+## 4. API Documentation (Aggregated & CRUD)
 
 ### Authentication
 - `POST /api/auth/register` - Create new user.
@@ -85,7 +85,7 @@ We implemented **Role-Based Access Control (RBAC)** to ensure data security and 
   - `monthlyTrends` (Income vs Expense by month)
 
 ### Financial Records
-- `GET /api/records` - View all records (Filter by `type`, `category`).
+- `GET /api/records` - View all records (Filter by type, category).
 - `POST /api/records` - Create record (Admin only + Balance Check).
 - `PUT /api/records/:id` - Update record (Admin only).
 - `DELETE /api/records/:id` - Delete record (Admin only).
@@ -97,7 +97,7 @@ We implemented **Role-Based Access Control (RBAC)** to ensure data security and 
 
 ---
 
-## 🗄️ 5. Data Modeling
+## 5. Data Modeling
 
 ### User Schema
 ```javascript
@@ -122,20 +122,20 @@ We implemented **Role-Based Access Control (RBAC)** to ensure data security and 
 
 ---
 
-## 🛡️ 6. Validation & Reliability
+## 6. Validation & Reliability
 - **Input Validation:** Strict MERN schema validation and type checking.
-- **Error Handling:** Centralized status codes (`400`, `401`, `403`, `404`, `500`) with descriptive Marathi/English error messages (e.g., "Insufficient balance ❌").
-- **Security:** JWT Authentication for all protected routes and password hashing using `bcryptjs`.
+- **Error Handling:** Centralized status codes (400, 401, 403, 404, 500) with descriptive error messages (e.g., "Insufficient balance").
+- **Security:** JWT Authentication for all protected routes and password hashing using bcryptjs.
 
 ---
 
-## 🔥 7. Additional Thoughtfulness (The Pro Level)
-- **Data Visualization:** Integrated **Chart.js** for Pie Charts (Income vs Expense) and Bar Charts (Category Analysis).
-- **UI/UX:** Modern Tailwind CSS design with a **Profile Badge system** indicating the current role.
+## 7. Additional Features
+- **Data Visualization:** Integrated Chart.js for Pie Charts (Income vs Expense) and Bar Charts (Category Analysis).
+- **UI/UX:** Modern Tailwind CSS design with a Profile Badge system indicating the current role.
 - **Absolute Balance Display:** The system logic ensures financial discipline while displaying values professionally.
 - **Smart Navbar:** Dynamically hides/shows links based on the logged-in user's role.
 
 ---
 
-## 📬 Postman Testing
-A comprehensive Postman collection `postman_collection.json` is included in the root folder for quick API testing.
+## Postman Testing
+A comprehensive Postman collection `postman_collection.json` is included in the backend folder for quick API testing.

@@ -2,6 +2,14 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { dashboardAPI } from '../services/api';
 import Navbar from '../components/Navbar';
+import { 
+  TrendingUp, 
+  TrendingDown, 
+  IndianRupee, 
+  Activity, 
+  BarChart3, 
+  PieChart 
+} from 'lucide-react';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -130,10 +138,8 @@ const Dashboard = () => {
                   {formatCurrency(summary.totalIncome)}
                 </p>
               </div>
-              <div className="bg-green-50 p-3 rounded-xl">
-                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11l5-5m0 0l5 5m-5-5v12" />
-                </svg>
+              <div className="bg-green-50 p-3 rounded-xl text-green-600">
+                <TrendingUp className="w-8 h-8" />
               </div>
             </div>
           </div>
@@ -146,10 +152,8 @@ const Dashboard = () => {
                   {formatCurrency(summary.totalExpense)}
                 </p>
               </div>
-              <div className="bg-red-50 p-3 rounded-xl">
-                <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 13l-5 5m0 0l-5-5m5 5V6" />
-                </svg>
+              <div className="bg-red-50 p-3 rounded-xl text-red-600">
+                <TrendingDown className="w-8 h-8" />
               </div>
             </div>
           </div>
@@ -162,10 +166,8 @@ const Dashboard = () => {
                   {formatCurrency(Math.abs(summary.netBalance))}
                 </p>
               </div>
-              <div className="p-3 rounded-xl bg-blue-50">
-                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+              <div className="p-3 rounded-xl bg-blue-50 text-blue-600">
+                <IndianRupee className="w-8 h-8" />
               </div>
             </div>
           </div>
@@ -174,7 +176,10 @@ const Dashboard = () => {
         {/* Charts Section - Visible to All */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h2 className="text-xl font-bold mb-6 text-gray-800">Monthly Trends</h2>
+            <div className="flex items-center gap-2 mb-6">
+              <BarChart3 className="w-5 h-5 text-gray-400" />
+              <h2 className="text-xl font-bold text-gray-800">Monthly Trends</h2>
+            </div>
             <div className="h-64">
               <Bar 
                 data={trendData} 
@@ -187,7 +192,10 @@ const Dashboard = () => {
           </div>
 
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h2 className="text-xl font-bold mb-6 text-gray-800">Income vs Expense</h2>
+            <div className="flex items-center gap-2 mb-6">
+              <PieChart className="w-5 h-5 text-gray-400" />
+              <h2 className="text-xl font-bold text-gray-800">Income vs Expense</h2>
+            </div>
             <div className="h-64 flex justify-center">
               <Pie data={pieData} options={{ maintainAspectRatio: false }} />
             </div>
@@ -197,7 +205,10 @@ const Dashboard = () => {
         {/* Category Wise Totals & Recent Activity */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h2 className="text-xl font-bold mb-4 text-gray-800">Category Breakdown</h2>
+            <div className="flex items-center gap-2 mb-4">
+              <Activity className="w-5 h-5 text-gray-400" />
+              <h2 className="text-xl font-bold text-gray-800">Category Breakdown</h2>
+            </div>
             <div className="space-y-4">
               {summary.categoryData.map((item, index) => (
                 <div key={index} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
@@ -214,7 +225,10 @@ const Dashboard = () => {
           </div>
 
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h2 className="text-xl font-bold mb-4 text-gray-800">Recent Activity</h2>
+            <div className="flex items-center gap-2 mb-4">
+              <Activity className="w-5 h-5 text-gray-400" />
+              <h2 className="text-xl font-bold text-gray-800">Recent Activity</h2>
+            </div>
             <div className="space-y-4">
               {summary.recentActivity.map((record) => (
                 <div key={record._id} className="flex justify-between items-center border-b border-gray-50 pb-3 last:border-0 last:pb-0">

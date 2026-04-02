@@ -19,14 +19,16 @@ exports.createRecord = async (req, res) => {
     const balance = totalIncome - totalExpense;
 
     if (amount > balance) {
-      return res.status(400).json({ message: "Insufficient balance ❌" });
+      return res.status(400).json({ message: "Insufficient balance" });
     }
   }
 
+  // Create new record
   const record = await Record.create({ ...req.body, userId: req.user.id });
   res.json(record);
 };
 
+// Get all records with optional filters
 exports.getRecords = async (req, res) => {
   const { type, category } = req.query;
 
@@ -38,6 +40,7 @@ exports.getRecords = async (req, res) => {
   res.json(records);
 };
 
+// Update an existing record
 exports.updateRecord = async (req, res) => {
   const record = await Record.findByIdAndUpdate(req.params.id, req.body, {
     new: true
@@ -45,6 +48,7 @@ exports.updateRecord = async (req, res) => {
   res.json(record);
 };
 
+// Delete a record
 exports.deleteRecord = async (req, res) => {
   await Record.findByIdAndDelete(req.params.id);
   res.json({ message: "Deleted" });
