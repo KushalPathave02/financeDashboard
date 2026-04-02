@@ -21,20 +21,22 @@ JWT_SECRET=supersecret
 ### Installation
 ```bash
 # Install Backend Dependencies
+cd backend
 npm install
 
 # Install Frontend Dependencies
-cd client
+cd ../client
 npm install
 cd ..
 ```
 
 ### Running the App
 ```bash
-# Terminal 1: Start Backend (Root Directory)
+# Terminal 1: Start Backend
+cd backend
 npm run dev
 
-# Terminal 2: Start Frontend (Client Directory)
+# Terminal 2: Start Frontend
 cd client
 npm run dev
 ```
@@ -43,7 +45,7 @@ npm run dev
 
 ## 🏗️ 2. Architectural Overview (Backend Design)
 
-The project follows **Clean Architecture** with a clear separation of concerns:
+The project follows **Clean Architecture** within the `backend/` directory:
 
 - **Controllers:** Authoritative logic for handling requests and responses.
 - **Models:** Schema definitions with strict data types and validations.
