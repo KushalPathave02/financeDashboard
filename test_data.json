@@ -1,0 +1,142 @@
+{
+  "auth": {
+    "register_admin": {
+      "name": "Admin User",
+      "email": "admin@test.com",
+      "password": "123456",
+      "role": "admin"
+    },
+    "register_analyst": {
+      "name": "Analyst User",
+      "email": "analyst@test.com",
+      "password": "123456",
+      "role": "analyst"
+    },
+    "register_viewer": {
+      "name": "Viewer User",
+      "email": "viewer@test.com",
+      "password": "123456",
+      "role": "viewer"
+    },
+    "login_admin": {
+      "email": "admin@test.com",
+      "password": "123456"
+    },
+    "login_analyst": {
+      "email": "analyst@test.com",
+      "password": "123456"
+    },
+    "login_viewer": {
+      "email": "viewer@test.com",
+      "password": "123456"
+    }
+  },
+  "records": {
+    "income_salary": {
+      "amount": 75000,
+      "type": "income",
+      "category": "salary",
+      "date": "2025-01-01",
+      "notes": "Monthly salary January"
+    },
+    "income_freelance": {
+      "amount": 25000,
+      "type": "income",
+      "category": "freelance",
+      "date": "2025-01-15",
+      "notes": "Freelance project payment"
+    },
+    "income_investment": {
+      "amount": 10000,
+      "type": "income",
+      "category": "investment",
+      "date": "2025-01-20",
+      "notes": "Stock dividends"
+    },
+    "income_bonus": {
+      "amount": 15000,
+      "type": "income",
+      "category": "bonus",
+      "date": "2025-01-25",
+      "notes": "Year-end bonus"
+    },
+    "expense_rent": {
+      "amount": 20000,
+      "type": "expense",
+      "category": "rent",
+      "date": "2025-01-01",
+      "notes": "Monthly house rent"
+    },
+    "expense_groceries": {
+      "amount": 5000,
+      "type": "expense",
+      "category": "groceries",
+      "date": "2025-01-05",
+      "notes": "Weekly groceries"
+    },
+    "expense_utilities": {
+      "amount": 3000,
+      "type": "expense",
+      "category": "utilities",
+      "date": "2025-01-10",
+      "notes": "Electricity and water bills"
+    },
+    "expense_transport": {
+      "amount": 4000,
+      "type": "expense",
+      "category": "transport",
+      "date": "2025-01-12",
+      "notes": "Fuel and maintenance"
+    },
+    "expense_entertainment": {
+      "amount": 2000,
+      "type": "expense",
+      "category": "entertainment",
+      "date": "2025-01-15",
+      "notes": "Movies and subscriptions"
+    },
+    "expense_healthcare": {
+      "amount": 3500,
+      "type": "expense",
+      "category": "healthcare",
+      "date": "2025-01-18",
+      "notes": "Medical checkup"
+    },
+    "expense_shopping": {
+      "amount": 8000,
+      "type": "expense",
+      "category": "shopping",
+      "date": "2025-01-22",
+      "notes": "Clothes and electronics"
+    },
+    "expense_education": {
+      "amount": 6000,
+      "type": "expense",
+      "category": "education",
+      "date": "2025-01-28",
+      "notes": "Online courses"
+    },
+    "update_record": {
+      "amount": 80000,
+      "notes": "Updated salary with increment"
+    }
+  },
+  "users": {
+    "update_user": {
+      "name": "Updated Name",
+      "status": "active"
+    },
+    "update_role": {
+      "role": "analyst"
+    }
+  },
+  "summary": {
+    "total_income": 125000,
+    "total_expense": 51500,
+    "net_balance": 73500,
+    "categories": {
+      "income": ["salary", "freelance", "investment", "bonus"],
+      "expense": ["rent", "groceries", "utilities", "transport", "entertainment", "healthcare", "shopping", "education"]
+    }
+  }
+}
