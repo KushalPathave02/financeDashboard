@@ -7,8 +7,9 @@ A professional, role-based financial management system built with Node.js, Expre
 ## 1. Setup Instructions
 
 ### Prerequisites
-- Node.js (v18+)
-- MongoDB Atlas Account (or local MongoDB)
+- **Node.js**: v18 or higher
+- **MongoDB**: Atlas Cloud Account or Local Instance
+- **Git**: For version control
 
 ### Environment Setup
 Create a `.env` file in the backend directory:
@@ -31,14 +32,10 @@ cd ..
 ```
 
 ### Running the App
+From the root directory, you can run both:
 ```bash
-# Terminal 1: Start Backend
-cd backend
-npm run dev
-
-# Terminal 2: Start Frontend
-cd client
-npm run dev
+npm run install-all  # Install everything
+npm run start        # Run both backend and frontend concurrently
 ```
 
 ---
@@ -83,9 +80,16 @@ We implemented Role-Based Access Control (RBAC) to ensure data security and inte
   - `categoryData` (Category-wise totals for charts)
   - `recentActivity` (Last 5 transactions)
   - `monthlyTrends` (Income vs Expense by month)
+  - `weeklyTrends` (Income vs Expense by week)
 
 ### Financial Records
-- `GET /api/records` - View all records (Filter by type, category).
+- `GET /api/records` - View all records with optional query params:
+  - `type` (income | expense)
+  - `startDate` (YYYY-MM-DD)
+  - `endDate` (YYYY-MM-DD)
+  - `search` (search in category/notes)
+  - `page` (default 1)
+  - `limit` (default 10)
 - `POST /api/records` - Create record (Admin only + Balance Check).
 - `PUT /api/records/:id` - Update record (Admin only).
 - `DELETE /api/records/:id` - Delete record (Admin only).
@@ -134,6 +138,8 @@ We implemented Role-Based Access Control (RBAC) to ensure data security and inte
 - **UI/UX:** Modern Tailwind CSS design with a Profile Badge system indicating the current role.
 - **Absolute Balance Display:** The system logic ensures financial discipline while displaying values professionally.
 - **Smart Navbar:** Dynamically hides/shows links based on the logged-in user's role.
+- **Advanced Records Management:** Includes Pagination (10/20/50 per page), Search (Category/Notes), and Date Range filtering.
+- **Performance & Security:** Basic API rate limiting implemented for production safety.
 
 ---
 
