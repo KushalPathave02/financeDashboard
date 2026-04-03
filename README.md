@@ -17,7 +17,7 @@ https://financedashboard-backend-2c5x.onrender.com
 Create a `.env` file in the backend directory:
 ```env
 PORT=5003
-MONGO_URI=your_mongodb_atlas_url
+MONGO_URL=your_mongodb_atlas_url
 JWT_SECRET=supersecret
 ```
 

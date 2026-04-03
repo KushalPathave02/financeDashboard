@@ -35,7 +35,7 @@ Set the following values in the Render dashboard:
 ## 4. Set Environment Variables
 Click on the **Environment** tab in Render and add the following:
 
-- `MONGO_URI`: Your MongoDB Atlas connection string.
+- `MONGO_URL`: Your MongoDB Atlas connection string.
 - `JWT_SECRET`: Your secret key (e.g., `supersecret`).
 - `PORT`: `5003` (The app is configured to use this, Render will proxy it to port 80/443).
 - `NODE_ENV`: `production`
