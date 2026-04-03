@@ -54,4 +54,4 @@ Once you click **Create Web Service**, Render will:
 3. Install backend dependencies.
 4. Start the server in production mode.
 
-Your app will be live at `https://your-app-name.onrender.com`.
+Your app will be live at `https://financedashboard-backend-2c5x.onrender.com`.
