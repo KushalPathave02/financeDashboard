@@ -7,7 +7,6 @@ const Register = () => {
     name: '',
     email: '',
     password: '',
-    role: 'viewer',
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -73,23 +72,10 @@ const Register = () => {
             />
           </div>
 
-          <div className="mb-6">
-            <label className="block text-gray-700 mb-2">Role</label>
-            <select
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={formData.role}
-              onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-            >
-              <option value="viewer">Viewer</option>
-              <option value="analyst">Analyst</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
-
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 disabled:opacity-50"
+            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 disabled:opacity-50 mt-4"
           >
             {loading ? 'Registering...' : 'Register'}
           </button>

@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 exports.register = async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password } = req.body;
 
   const hashed = await bcrypt.hash(password, 10);
 
@@ -11,7 +11,7 @@ exports.register = async (req, res) => {
     name,
     email,
     password: hashed,
-    role
+    role: "viewer" // Force default role to viewer for security
   });
 
   res.json(user);
