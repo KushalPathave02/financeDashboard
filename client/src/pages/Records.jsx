@@ -6,7 +6,11 @@ import Navbar from '../components/Navbar';
 const Records = () => {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState({ type: '', category: '' });
+  const [filter, setFilter] = useState({ type: '', startDate: '', endDate: '' });
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [meta, setMeta] = useState({ page: 1, limit: 10, total: 0, totalPages: 1 });
   const [showModal, setShowModal] = useState(false);
   const [editId, setEditId] = useState(null);
   const [formData, setFormData] = useState({
@@ -21,15 +25,20 @@ const Records = () => {
 
   useEffect(() => {
     fetchRecords();
-  }, [filter]);
+  }, [filter, search, page, limit]);
 
   const fetchRecords = async () => {
     try {
       const params = {};
       if (filter.type) params.type = filter.type;
-      if (filter.category) params.category = filter.category;
+      if (filter.startDate) params.startDate = filter.startDate;
+      if (filter.endDate) params.endDate = filter.endDate;
+      if (search) params.search = search;
+      params.page = page;
+      params.limit = limit;
       const res = await recordsAPI.getAll(params);
-      setRecords(res.data);
+      setRecords(res.data?.data || []);
+      setMeta(res.data?.meta || { page: 1, limit: 10, total: 0, totalPages: 1 });
     } catch (err) {
       console.error('Failed to fetch records:', err);
     } finally {
@@ -76,6 +85,11 @@ const Records = () => {
         console.error('Failed to delete record:', err);
       }
     }
+  };
+
+  const handleFilterChange = (next) => {
+    setPage(1);
+    setFilter(next);
   };
 
   const formatCurrency = (amount) => {
@@ -128,23 +142,56 @@ const Records = () => {
 
         {/* Filters */}
         <div className="bg-white p-4 rounded-lg shadow-md mb-6">
-          <div className="flex gap-4">
+          <div className="flex flex-col md:flex-row gap-4">
             <select
               className="p-2 border rounded-lg"
               value={filter.type}
-              onChange={(e) => setFilter({ ...filter, type: e.target.value })}
+              onChange={(e) => handleFilterChange({ ...filter, type: e.target.value })}
             >
               <option value="">All Types</option>
               <option value="income">Income</option>
               <option value="expense">Expense</option>
             </select>
+            <div className="flex flex-col">
+              <label className="text-xs text-gray-600 mb-1">Start Date</label>
+              <input
+                type="date"
+                className="p-2 border rounded-lg"
+                value={filter.startDate}
+                onChange={(e) => handleFilterChange({ ...filter, startDate: e.target.value })}
+              />
+            </div>
+            <div className="flex flex-col">
+              <label className="text-xs text-gray-600 mb-1">End Date</label>
+              <input
+                type="date"
+                className="p-2 border rounded-lg"
+                value={filter.endDate}
+                onChange={(e) => handleFilterChange({ ...filter, endDate: e.target.value })}
+              />
+            </div>
             <input
               type="text"
-              placeholder="Filter by category"
+              placeholder="Search category or notes"
               className="p-2 border rounded-lg"
-              value={filter.category}
-              onChange={(e) => setFilter({ ...filter, category: e.target.value })}
+              value={search}
+              onChange={(e) => {
+                setPage(1);
+                setSearch(e.target.value);
+              }}
             />
+            <select
+              className="p-2 border rounded-lg"
+              value={limit}
+              onChange={(e) => {
+                setPage(1);
+                setLimit(parseInt(e.target.value, 10));
+              }}
+            >
+              <option value={10}>10 / page</option>
+              <option value={20}>20 / page</option>
+              <option value={50}>50 / page</option>
+            </select>
           </div>
         </div>
 
@@ -209,6 +256,31 @@ const Records = () => {
               )}
             </tbody>
           </table>
+        </div>
+
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-4">
+          <div className="text-sm text-gray-600">
+            Showing {records.length} of {meta.total}
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              className="px-3 py-1.5 border rounded-lg disabled:opacity-50"
+              onClick={() => setPage((p) => Math.max(p - 1, 1))}
+              disabled={page <= 1}
+            >
+              Prev
+            </button>
+            <div className="text-sm text-gray-700">
+              Page {meta.page} of {meta.totalPages}
+            </div>
+            <button
+              className="px-3 py-1.5 border rounded-lg disabled:opacity-50"
+              onClick={() => setPage((p) => Math.min(p + 1, meta.totalPages || 1))}
+              disabled={page >= (meta.totalPages || 1)}
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
 

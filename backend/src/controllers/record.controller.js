@@ -30,14 +30,47 @@ exports.createRecord = async (req, res) => {
 
 // Get all records with optional filters
 exports.getRecords = async (req, res) => {
-  const { type, category } = req.query;
+  const { type, category, startDate, endDate, search, page = 1, limit = 10 } = req.query;
 
   const filter = {};
   if (type) filter.type = type;
   if (category) filter.category = category;
 
-  const records = await Record.find(filter);
-  res.json(records);
+  if (startDate || endDate) {
+    filter.date = {};
+    if (startDate) {
+      filter.date.$gte = new Date(startDate);
+    }
+    if (endDate) {
+      const end = new Date(endDate);
+      end.setDate(end.getDate() + 1);
+      filter.date.$lt = end;
+    }
+  }
+
+  if (search) {
+    const searchRegex = new RegExp(search, "i");
+    filter.$or = [{ category: searchRegex }, { notes: searchRegex }];
+  }
+
+  const pageNumber = Math.max(parseInt(page, 10) || 1, 1);
+  const limitNumber = Math.min(Math.max(parseInt(limit, 10) || 10, 1), 100);
+  const skip = (pageNumber - 1) * limitNumber;
+
+  const [records, total] = await Promise.all([
+    Record.find(filter).sort({ date: -1 }).skip(skip).limit(limitNumber),
+    Record.countDocuments(filter)
+  ]);
+
+  res.json({
+    data: records,
+    meta: {
+      page: pageNumber,
+      limit: limitNumber,
+      total,
+      totalPages: Math.ceil(total / limitNumber)
+    }
+  });
 };
 
 // Update an existing record

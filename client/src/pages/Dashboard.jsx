@@ -39,9 +39,11 @@ const Dashboard = () => {
     netBalance: 0,
     categoryData: [],
     recentActivity: [],
-    monthlyTrends: []
+    monthlyTrends: [],
+    weeklyTrends: []
   });
   const [loading, setLoading] = useState(true);
+  const [trendView, setTrendView] = useState('monthly');
   const { user } = useAuth();
 
   useEffect(() => {
@@ -90,21 +92,29 @@ const Dashboard = () => {
     ],
   };
 
-  const trendLabels = summary.monthlyTrends.map(d => monthNames[d._id]);
-  const trendIncome = summary.monthlyTrends.map(d => d.totalIncome);
-  const trendExpense = summary.monthlyTrends.map(d => d.totalExpense);
+  const monthlyTrendLabels = summary.monthlyTrends.map(d => monthNames[d._id]);
+  const monthlyTrendIncome = summary.monthlyTrends.map(d => d.totalIncome);
+  const monthlyTrendExpense = summary.monthlyTrends.map(d => d.totalExpense);
+
+  const weeklyTrendLabels = summary.weeklyTrends.map(d => `W${d._id.week} ${d._id.year}`);
+  const weeklyTrendIncome = summary.weeklyTrends.map(d => d.totalIncome);
+  const weeklyTrendExpense = summary.weeklyTrends.map(d => d.totalExpense);
+
+  const activeTrendLabels = trendView === 'weekly' ? weeklyTrendLabels : monthlyTrendLabels;
+  const activeTrendIncome = trendView === 'weekly' ? weeklyTrendIncome : monthlyTrendIncome;
+  const activeTrendExpense = trendView === 'weekly' ? weeklyTrendExpense : monthlyTrendExpense;
 
   const trendData = {
-    labels: trendLabels,
+    labels: activeTrendLabels,
     datasets: [
       {
         label: 'Income',
-        data: trendIncome,
+        data: activeTrendIncome,
         backgroundColor: '#10B981',
       },
       {
         label: 'Expense',
-        data: trendExpense,
+        data: activeTrendExpense,
         backgroundColor: '#EF4444',
       },
     ],
@@ -176,9 +186,19 @@ const Dashboard = () => {
         {/* Charts Section - Visible to All */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <div className="flex items-center gap-2 mb-6">
-              <BarChart3 className="w-5 h-5 text-gray-400" />
-              <h2 className="text-xl font-bold text-gray-800">Monthly Trends</h2>
+            <div className="flex items-center justify-between gap-2 mb-6">
+              <div className="flex items-center gap-2">
+                <BarChart3 className="w-5 h-5 text-gray-400" />
+                <h2 className="text-xl font-bold text-gray-800">Trends</h2>
+              </div>
+              <select
+                className="p-2 border rounded-lg text-sm"
+                value={trendView}
+                onChange={(e) => setTrendView(e.target.value)}
+              >
+                <option value="monthly">Monthly</option>
+                <option value="weekly">Weekly</option>
+              </select>
             </div>
             <div className="h-64">
               <Bar 

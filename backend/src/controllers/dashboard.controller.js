@@ -32,12 +32,30 @@ exports.getSummary = async (req, res) => {
     { $sort: { "_id": 1 } }
   ]);
 
+  const weeklyTrends = await Record.aggregate([
+    {
+      $group: {
+        _id: { year: { $isoWeekYear: "$date" }, week: { $isoWeek: "$date" } },
+        totalIncome: {
+          $sum: { $cond: [{ $eq: ["$type", "income"] }, "$amount", 0] }
+        },
+        totalExpense: {
+          $sum: { $cond: [{ $eq: ["$type", "expense"] }, "$amount", 0] }
+        }
+      }
+    },
+    { $sort: { "_id.year": -1, "_id.week": -1 } },
+    { $limit: 8 },
+    { $sort: { "_id.year": 1, "_id.week": 1 } }
+  ]);
+
   res.json({
     totalIncome: income[0]?.total || 0,
     totalExpense: expense[0]?.total || 0,
     netBalance: (income[0]?.total || 0) - (expense[0]?.total || 0),
     categoryData,
     recentActivity,
-    monthlyTrends
+    monthlyTrends,
+    weeklyTrends
   });
 };
